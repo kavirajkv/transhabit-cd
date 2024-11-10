@@ -1,0 +1,37 @@
+
+apiVersion : apps/v1
+kind : Deployment
+metadata :
+  name : transhabit
+  labels :
+    app : transhabit
+spec :
+  replicas : 1
+  selector : 
+    matchLabels :
+      app : transhabit
+  template :
+    metadata :
+      labels :
+        app : transhabit
+    spec :
+      containers :
+      - name : transhabit 
+        image : kavirajkv/test:v1
+        ports :
+        - containerPort : 8000
+---
+
+apiVersion : v1
+kind : Service
+metadata : 
+  name : transhabit-service
+spec :
+  selector :
+    app : transhabit
+  type : LoadBalancer
+  ports : 
+    - protocol : TCP
+      port : 80
+      targetPort : 8000
+      nodePort : 30100
